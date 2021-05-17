@@ -2,26 +2,13 @@ import numpy as np # used to for array structres
 import matplotlib.pyplot as plt
 from tensorflow.keras.layers import Conv2D,Input,Conv2DTranspose,Activation,BatchNormalization,ReLU,Concatenate
 from tensorflow.keras.models import Model
-from tensorflow.keras.callbacks import ModelCheckpoint #Callback to save the Keras model or model weights at some frequency
+from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.datasets import cifar100
-
-#10 - This is a dataset of 50,000 32x32 color training images and 10,000 test images, labeled over 10 categories.
-#100 - This is a dataset of 50,000 32x32 color training images and 10,000 test images, labeled over 100 fine-grained classes that are grouped into 20 coarse-grained classes.
-
-#Conv2D - convolution 2D layer , input - used to input data to layers , conv2dtranspose - Deconvolution
-#Activation - activates a layer , #batchnormaliztion - Layer that normalizes its inputs i.e mean and variance of inputs
-#ReLU - Rectified Linear Unit activation , concate -Layer that concatenates a list of inputs
-
 
 (train_data_clean, _), (test_data_clean, _) = cifar100.load_data(label_mode='fine')
 
 train_data_clean = train_data_clean.astype('float32') / 255.
 test_data_clean = test_data_clean.astype('float32') / 255.
-
-#It is most common to use 32-bit precision when training a neural network, so at one point the training data will have to be converted to 32 bit floats.
-#255, this is the maximum value of a byte (the input feature's type before the conversion to float32),
-# so this will ensure that the input features are scaled between 0.0 and 1.0
-
 
 def add_noise_and_clip_data(data):
     noise = np.random.normal(loc=0.0, scale=0.1, size=data.shape)
